@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAREA 2 — RA2: Tecnologías Habilitadoras Digitales · AquaFlow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f7f8;--panel:#fff;--ink:#10242c;--mute:#4d636b;--line:#cbd9de;--water:#0b5f78;--ot:#a8741a;--itot:#1f8467;--thd:#5b4bb7;--it:#0b5f78;--hl:#e6f0f3;
+--head:"Bricolage Grotesque","Trebuchet MS",sans-serif;--body:"Source Serif 4",Georgia,serif}
+@media (prefers-color-scheme:dark){:root{--bg:#0c181d;--panel:#122229;--ink:#e5eef0;--mute:#9db3ba;--line:#244049;--water:#5cc3df;--ot:#e0a850;--itot:#4fcba6;--thd:#a99bff;--it:#5cc3df;--hl:#173039}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:1rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.08rem/1.65 var(--body)}
+a{color:var(--water)}
+:focus-visible{outline:3px solid var(--thd);outline-offset:2px}
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1120px;margin:0 auto;gap:3rem;padding:0 1.5rem}
+nav{position:sticky;top:0;align-self:start;padding:2rem 0;font:600 .95rem/1.3 var(--head)}
+nav b{display:block;margin-bottom:1rem;font-size:1.05rem}
+nav a{display:block;padding:.45rem 0 .45rem .9rem;border-left:3px solid var(--line);color:var(--mute);text-decoration:none}
+nav a:hover{color:var(--ink);border-color:var(--water)}
+main{padding:2rem 0 5rem;min-width:0}
+h1,h2,h3{font-family:var(--head);line-height:1.12;margin:0}
+h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.9rem;font-weight:700;margin:4rem 0 1rem;padding-top:1.2rem;border-top:3px solid var(--water)}
+h3{font-size:1.15rem;margin:1.6rem 0 .5rem}
+.lead{font-size:1.2rem;max-width:62ch;margin:1.2rem 0}
+.sub{font:700 1.1rem var(--head);color:var(--water);margin:0 0 .6rem}
+p,li{max-width:68ch}
+/* tubería */
+.pipe{display:flex;align-items:stretch;margin:2rem 0 .8rem;padding:0;list-style:none;max-width:none}
+.pipe li{flex:1;position:relative;background:var(--panel);border:2px solid var(--line);border-top-width:6px;padding:.7rem .6rem;font:600 .9rem/1.25 var(--head);text-align:center;margin-right:26px}
+.pipe li:last-child{margin-right:0}
+.pipe li:not(:last-child)::after{content:"";position:absolute;left:100%;top:50%;width:26px;height:8px;margin-top:-4px;background:linear-gradient(var(--line),var(--mute),var(--line))}
+.pipe small{display:block;margin-top:.3rem;font:500 .78rem var(--head);color:var(--mute)}
+.pipe .ot{border-top-color:var(--ot)}.pipe .itot{border-top-color:var(--itot)}.pipe .thd{border-top-color:var(--thd)}.pipe .it{border-top-color:var(--it)}
+.key{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font:600 .85rem var(--head);color:var(--mute);margin:0 0 1rem}
+.tag{display:inline-block;padding:.05rem .55rem;border-radius:4px;font:700 .82rem var(--head);color:#fff;white-space:nowrap}
+.tag.ot{background:var(--ot)}.tag.itot{background:var(--itot)}.tag.thd{background:var(--thd)}.tag.it{background:var(--it)}
+@media (prefers-color-scheme:dark){.tag{color:#0c181d}}
+/* tablas */
+.tw{overflow-x:auto;margin:1rem 0;border:1px solid var(--line);background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.98rem;line-height:1.5}
+th,td{padding:.7rem .9rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font:700 .95rem var(--head);background:var(--hl)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600}
+.note{border-left:5px solid var(--water);background:var(--hl);padding:.8rem 1.1rem;margin:1.4rem 0;max-width:70ch}
+.note.warn{border-color:var(--ot)}
+blockquote{margin:1.4rem 0;padding-left:1.2rem;border-left:3px solid var(--ot);font-style:italic;max-width:62ch}
+.q{margin:1.6rem 0}
+.q dt{font:700 1.05rem var(--head);color:var(--water)}
+.q dd{margin:.2rem 0 0}
+footer{margin-top:4rem;color:var(--mute);font-size:.92rem;border-top:1px solid var(--line);padding-top:1rem}
+@media (max-width:860px){
+.layout{grid-template-columns:1fr;gap:0}
+nav{position:static;padding:1rem 0 0;display:flex;flex-wrap:wrap;gap:.3rem .5rem;align-items:center}
+nav b{width:100%;margin:0}
+nav a{border:1px solid var(--line);padding:.3rem .7rem}
+.pipe{flex-direction:column}
+.pipe li{margin:0 0 22px}
+.pipe li:last-child{margin:0}
+.pipe li:not(:last-child)::after{left:50%;top:100%;width:8px;height:22px;margin:0 0 0 -4px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav aria-label="Apartados">
+<b>AquaFlow · Tarea 2</b>
+<a href="#thd">1. THD de mi fábrica</a>
+<a href="#funcionamiento">2. Cómo funciona una THD</a>
+<a href="#clasificacion">3. THD, IT, OT e IT+OT</a>
+<a href="#beneficios">4. Beneficios</a>
+<a href="#mercados">5. Nuevos mercados</a>
+</nav>
+
+<main>
+<header>
+<p class="sub">Digitalización aplicada a los sectores productivos · RA2</p>
+<h1>TAREA 2 — RA2: Tecnologías Habilitadoras Digitales</h1>
+<p class="lead"><strong>AquaFlow Grifería S.L.</strong> fabrica grifos y válvulas de latón. En la Tarea 1 conectamos la planta (OT) con el negocio (IT). Ahora añadimos las THD para que esa solución conecte, analice, prediga y ofrezca nuevos servicios.</p>
+
+<ol class="pipe" aria-label="Flujo del mantenimiento predictivo">
+<li class="ot">Sensor y PLC<small>mide la CNC</small></li>
+<li class="thd">IoT<small>conecta y transmite</small></li>
+<li class="itot">Gateway y plataforma<small>planta → negocio</small></li>
+<li class="thd">Big Data + IA<small>aprende y predice</small></li>
+<li class="it">Software de mantenimiento<small>orden de trabajo</small></li>
+<li>Decisión<small>responsable de mantenimiento</small></li>
+</ol>
+<p class="key" aria-label="Leyenda"><span><span class="tag ot">OT</span> planta</span><span><span class="tag itot">IT+OT</span> integración</span><span><span class="tag it">IT</span> negocio</span><span><span class="tag thd">THD</span> tecnología habilitadora</span></p>
+<p><strong>Lógica:</strong> necesidad → solución IT/OT → THD → nuevas capacidades → beneficio para la empresa y sus clientes.</p>
+</header>
+
+<section id="thd">
+<h2>1. THD de mi fábrica</h2>
+<p>He seleccionado tres THD que responden a los problemas detectados en la Tarea 1.</p>
+<div class="tw"><table>
+<thead><tr><th>THD elegida</th><th>Problema que resuelve</th><th>Aplicación en AquaFlow</th></tr></thead>
+<tbody>
+<tr><td>1. Internet de las cosas (IoT)</td><td>No se conoce el estado de las máquinas, la producción en tiempo real ni dónde se gasta la energía (problemas 1, 4 y 5).</td><td>Conectar sensores de vibración y temperatura en CNC y prensas de forja, y medidores de energía en hornos de fundición, compresores y baños de cromado, y enviar sus datos a una plataforma.</td></tr>
+<tr><td>2. Inteligencia artificial (IA)</td><td>Las máquinas se averían sin avisar y algunos defectos de acabado (pulido y cromado) pasan desapercibidos (problemas 1 y 2).</td><td>Modelo de <em>machine learning</em> que aprende el patrón de vibración de un husillo o rodamiento sano y detecta el desgaste antes del fallo. Visión artificial para revisar el acabado cromado.</td></tr>
+<tr><td>3. Big Data y analítica de datos</td><td>Se decide tarde y sin saber dónde están las pérdidas, los rechazos y los cuellos de botella (problemas 3, 4 y 5).</td><td>Analizar el histórico de producción, rechazos, paradas, consumo y pruebas de estanqueidad, por máquina y por turno, para ver dónde se pierde dinero y materia prima.</td></tr>
+</tbody></table></div>
+<p><strong>¿Por qué estas tres?</strong> Forman una cadena: el IoT recoge los datos, el Big Data los almacena y analiza en conjunto, y la IA aprende de ellos para predecir. Sin IoT no hay datos; sin datos de calidad, la IA no es precisa.</p>
+</section>
+
+<section id="funcionamiento">
+<h2>2. Cómo funciona una THD: inteligencia artificial</h2>
+<p>Ficha explicativa de la IA aplicada al mantenimiento predictivo de la CNC.</p>
+<dl class="q">
+<dt>¿Qué es la THD?</dt>
+<dd>Una tecnología que analiza información, reconoce patrones y hace predicciones. En lugar de programar reglas fijas del tipo «si la vibración supera X, avisa», se entrena al sistema con ejemplos y él descubre el patrón. Es útil cuando el desgaste cambia el comportamiento de la máquina de formas difíciles de describir con reglas.</dd>
+<dt>¿Qué elementos necesita?</dt>
+<dd>Datos históricos de vibración y temperatura junto con el registro de averías y revisiones; sensores (OT) y gateway IoT para capturarlos; una plataforma de datos; el modelo de IA entrenado; integración con el software de mantenimiento (IT); y personas de mantenimiento que validen los avisos y corrijan al modelo.</dd>
+<dt>¿Cómo funciona en mi fábrica?</dt>
+<dd><ol>
+<li>Los sensores miden la vibración del husillo de la CNC y el PLC asocia el dato a la máquina.</li>
+<li>El gateway IoT lo envía a la plataforma de datos.</li>
+<li>Se etiquetan los datos históricos como «máquina sana» o «máquina cerca de fallar» y se entrena el modelo.</li>
+<li>El modelo en producción analiza los datos actuales y los compara con lo aprendido (inferencia).</li>
+<li>Si detecta una anomalía, el software de mantenimiento genera una orden de trabajo y el responsable recibe una alerta en el móvil.</li>
+<li>Mantenimiento revisa la máquina en la siguiente parada programada y su diagnóstico retroalimenta el modelo, que mejora con el tiempo.</li>
+</ol></dd>
+<dt>¿Qué problema resuelve?</dt>
+<dd>Las averías de CNC y prensas por desgaste de husillos y rodamientos, que hoy causan paradas, pedidos retrasados y reparaciones urgentes más caras.</dd>
+<dt>¿Qué ventaja aporta?</dt>
+<dd>Se pasa de reparar cuando la máquina falla a intervenir antes. Las paradas se planifican, los repuestos se compran con antelación y se reducen los lotes defectuosos que produce una máquina desgastada.</dd>
+</dl>
+<div class="note"><strong>Condición de partida:</strong> la IA es tan buena como sus datos. AquaFlow no tiene hoy un histórico digital, así que el primer paso es recoger datos durante unos meses. Mientras tanto se puede empezar con detección de anomalías, que compara la máquina consigo misma sin necesitar un historial de averías.</div>
+</section>
+
+<section id="clasificacion">
+<h2>3. THD, IT, OT e IT+OT</h2>
+<p>Solución elegida de la Tarea 1: mantenimiento predictivo de las máquinas CNC.</p>
+<div class="tw"><table>
+<thead><tr><th>Elemento o tecnología</th><th>¿Qué función tiene?</th><th>Clasificación</th></tr></thead>
+<tbody>
+<tr><td>Sensor de vibración y temperatura</td><td>Mide el estado del husillo de la CNC.</td><td><span class="tag ot">OT</span></td></tr>
+<tr><td>PLC de la CNC</td><td>Recibe los datos y controla la máquina.</td><td><span class="tag ot">OT</span></td></tr>
+<tr><td>IoT</td><td>Conecta sensores y máquinas y permite transmitir sus datos.</td><td><span class="tag thd">THD</span></td></tr>
+<tr><td>Gateway IoT</td><td>Lleva los datos de la planta a la plataforma de datos.</td><td><span class="tag itot">IT+OT</span></td></tr>
+<tr><td>Plataforma de datos</td><td>Almacena el histórico y comparte la información entre planta y negocio.</td><td><span class="tag itot">IT+OT</span></td></tr>
+<tr><td>Big Data</td><td>Analiza grandes volúmenes de datos para encontrar patrones.</td><td><span class="tag thd">THD</span></td></tr>
+<tr><td>Inteligencia artificial</td><td>Aprende del histórico y detecta anomalías antes de la avería.</td><td><span class="tag thd">THD</span></td></tr>
+<tr><td>Software de mantenimiento (CMMS)</td><td>Registra averías y gestiona las órdenes de trabajo.</td><td><span class="tag it">IT</span></td></tr>
+<tr><td>Dashboard / BI</td><td>Muestra al responsable el estado de las máquinas y los indicadores.</td><td><span class="tag it">IT</span></td></tr>
+<tr><td>Segmentación de red IT/OT y control de accesos</td><td>Protege las máquinas conectadas frente a accesos no autorizados.</td><td><span class="tag thd">THD</span> ciberseguridad</td></tr>
+</tbody></table></div>
+<div class="note"><strong>Idea clave:</strong> las THD no sustituyen a los sistemas IT y OT, se apoyan en ellos. La IA necesita sensores (OT) para obtener datos y un software de mantenimiento (IT) para que su aviso se convierta en una acción.</div>
+</section>
+
+<section id="beneficios">
+<h2>4. Beneficios de las THD</h2>
+<div class="tw"><table>
+<thead><tr><th>THD</th><th>Mejora en planta o negocio</th><th>Beneficio económico o ambiental</th></tr></thead>
+<tbody>
+<tr><td>1. IoT<br><small>(eficiencia y sostenibilidad)</small></td><td>Medir el consumo de energía de cada máquina (hornos de fundición, compresores y baños de cromado) y generar alertas de consumo anómalo, como fugas de aire comprimido.</td><td><strong>Económico:</strong> menor factura eléctrica al saber dónde se gasta.<br><strong>Ambiental:</strong> menos kWh consumidos y menos emisiones asociadas.</td></tr>
+<tr><td>2. IA</td><td>Predecir averías en CNC y prensas, y detectar defectos de acabado antes de que el lote llegue al cliente.</td><td><strong>Económico:</strong> menos paradas no planificadas, reparaciones urgentes y devoluciones.<br><strong>Ambiental:</strong> menos piezas de latón y cromo desechadas, y menos materia prima y energía desperdiciadas.</td></tr>
+</tbody></table></div>
+<p><strong>Objetivo medible (informe de ROI):</strong> definir un objetivo, por ejemplo reducir un 20 % las paradas por avería, recoger los datos antes y después, y comparar el resultado con el coste de la inversión.</p>
+<blockquote>«La eficiencia es hacer las cosas bien; la efectividad es hacer las cosas correctas.» — Peter Drucker. Estas THD no solo aceleran la producción, también evitan que se desperdicien recursos.</blockquote>
+</section>
+
+<section id="mercados">
+<h2>5. Nuevos mercados</h2>
+<dl class="q">
+<dt>1. ¿Qué producto o servicio nuevo podría ofrecer AquaFlow?</dt>
+<dd>Una <strong>válvula de corte inteligente con servicio de detección de fugas</strong>: una válvula de AquaFlow con sensor de caudal y conectividad, acompañada de una aplicación con alertas. Además, cada grifo y válvula llevaría un <strong>pasaporte digital</strong> (código QR) con su lote, los resultados de sus pruebas de estanqueidad y presión, y su guía de instalación.</dd>
+<dt>2. ¿Qué THD utilizaría?</dt>
+<dd>IoT para conectar la válvula, IA para distinguir un consumo normal de una fuga, y Cloud y Big Data para almacenar y comparar los datos de muchas instalaciones. El pasaporte digital reutiliza la trazabilidad por número de serie de la Tarea 1.</dd>
+<dt>3. ¿Qué cliente lo necesitaría?</dt>
+<dd>Constructoras y promotoras (viviendas entregadas con protección contra fugas), empresas instaladoras (que ofrecen un servicio de valor añadido) y administradores de fincas. Los distribuidores se benefician de la trazabilidad por lote.</dd>
+<dt>4. ¿Qué necesidad resolvería?</dt>
+<dd>Las fugas de agua no detectadas causan daños en viviendas, reclamaciones y desperdicio de agua, y hoy suelen descubrirse tarde. Además, el pasaporte digital permite saber qué unidades revisar si un lote falla.</dd>
+<dt>5. ¿Qué ventaja tendría frente a otras empresas?</dt>
+<dd>AquaFlow pasaría de vender un producto a vender un servicio recurrente (suscripción de monitorización), con ingresos más estables. Al fabricar la válvula, conoce el producto y garantiza su trazabilidad completa. Además, ayuda al cliente a ahorrar agua, un argumento de sostenibilidad.</dd>
+</dl>
+<div class="note warn"><strong>Riesgos:</strong> una válvula conectada amplía la superficie de ataque, por lo que requiere cifrado y buenas prácticas de ciberseguridad. Los datos de consumo de los hogares son datos personales y deben tratarse conforme al RGPD.</div>
+</section>
+
+<footer>Tarea 2 — RA2 · Digitalización aplicada a los sectores productivos · FP de Grado Superior. Continuación de la <a href="https://digitalizacion2dam.gitbook.io/digitalizacion">Tarea 1: AquaFlow, digitalización IT/OT</a>.</footer>
+</main>
+</div>
+</body>
+</html>
