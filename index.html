@@ -53,6 +53,11 @@ blockquote{margin:1.4rem 0;padding-left:1.2rem;border-left:3px solid var(--ot);f
 .q{margin:1.6rem 0}
 .q dt{font:700 1.05rem var(--head);color:var(--water)}
 .q dd{margin:.2rem 0 0}
+.team{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;margin:1rem 0 0;padding:0;list-style:none;font:600 .95rem var(--head);max-width:none}
+.team li{max-width:none}
+.team .lbl{color:var(--mute);margin-right:.2rem}
+.team .p{padding:.2rem .75rem;border:1px solid var(--line);border-radius:999px;background:var(--panel)}
+nav .team-nav{display:block;width:100%;margin:-.4rem 0 1rem;font:500 .85rem/1.4 var(--head);color:var(--mute)}
 footer{margin-top:4rem;color:var(--mute);font-size:.92rem;border-top:1px solid var(--line);padding-top:1rem}
 @media (max-width:860px){
 .layout{grid-template-columns:1fr;gap:0}
@@ -71,6 +76,7 @@ nav a{border:1px solid var(--line);padding:.3rem .7rem}
 <div class="layout">
 <nav aria-label="Apartados">
 <b>AquaFlow · Tarea 2</b>
+<span class="team-nav">Eva Gallardo · Sergio García · Iván Márquez</span>
 <a href="#thd">1. THD de mi fábrica</a>
 <a href="#funcionamiento">2. Cómo funciona una THD</a>
 <a href="#clasificacion">3. THD, IT, OT e IT+OT</a>
@@ -82,6 +88,12 @@ nav a{border:1px solid var(--line);padding:.3rem .7rem}
 <header>
 <p class="sub">Digitalización aplicada a los sectores productivos · RA2</p>
 <h1>TAREA 2 — RA2: Tecnologías Habilitadoras Digitales</h1>
+<ul class="team" aria-label="Integrantes del grupo">
+<li class="lbl">Integrantes:</li>
+<li class="p">Eva Gallardo</li>
+<li class="p">Sergio García</li>
+<li class="p">Iván Márquez</li>
+</ul>
 <p class="lead"><strong>AquaFlow Grifería S.L.</strong> fabrica grifos y válvulas de latón. En la Tarea 1 conectamos la planta (OT) con el negocio (IT). Ahora añadimos las THD para que esa solución conecte, analice, prediga y ofrezca nuevos servicios.</p>
 
 <ol class="pipe" aria-label="Flujo del mantenimiento predictivo">
@@ -183,7 +195,7 @@ nav a{border:1px solid var(--line);padding:.3rem .7rem}
 <div class="note warn"><strong>Riesgos:</strong> una válvula conectada amplía la superficie de ataque, por lo que requiere cifrado y buenas prácticas de ciberseguridad. Los datos de consumo de los hogares son datos personales y deben tratarse conforme al RGPD.</div>
 </section>
 
-<footer>Tarea 2 — RA2 · Digitalización aplicada a los sectores productivos · FP de Grado Superior. Continuación de la <a href="https://digitalizacion2dam.gitbook.io/digitalizacion">Tarea 1: AquaFlow, digitalización IT/OT</a>.</footer>
+<footer><strong>Grupo:</strong> Eva Gallardo, Sergio García e Iván Márquez.<br>Tarea 2 — RA2 · Digitalización aplicada a los sectores productivos · FP de Grado Superior. Continuación de la <a href="https://digitalizacion2dam.gitbook.io/digitalizacion">Tarea 1: AquaFlow, digitalización IT/OT</a>.</footer>
 </main>
 </div>
 </body>
