@@ -70,6 +70,25 @@ nav a{border:1px solid var(--line);padding:.3rem .7rem}
 .pipe li:not(:last-child)::after{left:50%;top:100%;width:8px;height:22px;margin:0 0 0 -4px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* diccionario: palabras con bocadillo */
+.term{cursor:help;text-decoration:underline dotted var(--thd);text-decoration-thickness:2px;text-underline-offset:3px;border-radius:3px}
+.term:hover,.term.activo{background:color-mix(in srgb,var(--thd) 16%,transparent)}
+.tag .term{text-decoration-color:currentColor}
+.tag .term:hover,.tag .term.activo{background:rgba(255,255,255,.22)}
+#bocadillo{position:absolute;z-index:50;width:min(340px,calc(100vw - 16px));background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:5px solid var(--thd);border-radius:8px;padding:.75rem .95rem .85rem;box-shadow:0 10px 30px rgba(0,0,0,.18);font:.96rem/1.5 var(--body)}
+#bocadillo[hidden]{display:none}
+#bocadillo strong{display:block;font:700 1rem/1.25 var(--head);color:var(--thd);margin-bottom:.3rem}
+#bocadillo p{margin:0}
+#bocadillo .flecha{position:absolute;top:-13px;width:14px;height:14px;margin-left:-7px;background:var(--thd);clip-path:polygon(50% 0,100% 100%,0 100%);}
+#bocadillo.arriba{border-top:1px solid var(--line);border-bottom:5px solid var(--thd)}
+#bocadillo.arriba .flecha{top:auto;bottom:-13px;clip-path:polygon(0 0,100% 0,50% 100%)}
+.buscador{width:100%;max-width:420px;padding:.6rem .8rem;border:2px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:1rem var(--head)}
+.dicc{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);margin:1.2rem 0;border:1px solid var(--line);background:var(--panel)}
+.dicc dt,.dicc dd{margin:0;padding:.6rem .9rem;border-bottom:1px solid var(--line);max-width:none}
+.dicc dt{font:700 .98rem/1.35 var(--head);color:var(--thd)}
+.dicc dd{font-size:.98rem;line-height:1.5}
+.dicc .oculto{display:none}
+@media (max-width:620px){.dicc{grid-template-columns:1fr}.dicc dt{border-bottom:0;padding-bottom:0}}
 </style>
 </head>
 <body>
@@ -82,6 +101,7 @@ nav a{border:1px solid var(--line);padding:.3rem .7rem}
 <a href="#clasificacion">3. THD, IT, OT e IT+OT</a>
 <a href="#beneficios">4. Beneficios</a>
 <a href="#mercados">5. Nuevos mercados</a>
+<a href="#diccionario">6. Diccionario</a>
 </nav>
 
 <main>
@@ -195,8 +215,169 @@ nav a{border:1px solid var(--line);padding:.3rem .7rem}
 <div class="note warn"><strong>Riesgos:</strong> una válvula conectada amplía la superficie de ataque, por lo que requiere cifrado y buenas prácticas de ciberseguridad. Los datos de consumo de los hogares son datos personales y deben tratarse conforme al RGPD.</div>
 </section>
 
+<section id="diccionario">
+<h2>6. Diccionario</h2>
+<p>Todas las palabras técnicas de la tarea. En el texto aparecen <span class="term" style="cursor:default">subrayadas así</span>: púlsalas para ver su significado.</p>
+<input class="buscador" type="search" id="buscar" placeholder="Buscar palabra…" aria-label="Buscar en el diccionario">
+<dl class="dicc" id="dicc"></dl>
+</section>
+
 <footer><strong>Grupo:</strong> Eva Gallardo, Sergio García e Iván Márquez.<br>Tarea 2 — RA2 · Digitalización aplicada a los sectores productivos · FP de Grado Superior. Continuación de la <a href="https://digitalizacion2dam.gitbook.io/digitalizacion">Tarea 1: AquaFlow, digitalización IT/OT</a>.</footer>
 </main>
 </div>
+<div id="bocadillo" role="tooltip" hidden><span class="flecha"></span><strong></strong><p></p></div>
+<script>
+/* t: término · p: formas en las que aparece en el texto · d: definición · cs: distinguir mayúsculas */
+const DICC=[
+{t:"THD (Tecnologías Habilitadoras Digitales)",p:["THD","tecnologías habilitadoras digitales","tecnología habilitadora"],d:"Conjunto de tecnologías que permiten digitalizar una empresa: IoT, inteligencia artificial, Big Data, cloud, ciberseguridad, robótica, fabricación aditiva, realidad aumentada… Sirven para conectar, analizar, predecir y crear nuevos productos o servicios. No sustituyen a los sistemas IT y OT: se apoyan en ellos."},
+{t:"Digitalización",p:["Digitalización"],d:"Usar tecnologías digitales para cambiar y mejorar los procesos de una empresa. No es lo mismo que digitizar (pasar algo de papel a formato digital). Cuando la digitalización cambia el modelo de negocio completo se habla de transformación digital."},
+{t:"RA2",p:["RA2"],d:"Resultado de Aprendizaje 2 del módulo. Los RA son los objetivos que fija el currículo de FP; este trata sobre las tecnologías habilitadoras digitales."},
+{t:"S.L. (Sociedad Limitada)",p:["S.L."],d:"Tipo de empresa en la que los socios solo responden de las deudas con el capital que han aportado, no con su patrimonio personal."},
+{t:"IT (Information Technology)",p:["IT"],cs:true,d:"Tecnologías de la información: sistemas que gestionan los datos del negocio, como el ERP, el CRM, el software de mantenimiento, las bases de datos o los dashboards. Su prioridad es la confidencialidad de la información."},
+{t:"OT (Operational Technology)",p:["OT"],cs:true,d:"Tecnología de operación: hardware y software que controla y vigila los procesos físicos de la planta, como sensores, PLC, máquinas CNC o sistemas SCADA. Su prioridad es la disponibilidad: que la producción no se pare y que sea segura."},
+{t:"IT+OT (convergencia IT/OT)",p:["IT+OT"],d:"Elementos que hacen de puente entre la planta (OT) y el negocio (IT), como el gateway o la plataforma de datos. Gracias a ellos los datos de las máquinas llegan a los sistemas de gestión y las decisiones del negocio llegan a la planta."},
+{t:"IoT (Internet de las cosas)",p:["IoT","Internet de las cosas"],d:"Conectar objetos físicos (sensores, máquinas, contadores, válvulas) a una red para que envíen datos de forma automática, sin que nadie los apunte. En la industria se le llama también IIoT (Industrial IoT)."},
+{t:"IA (Inteligencia artificial)",p:["IA","inteligencia artificial"],cs:true,d:"Rama de la informática que crea sistemas capaces de hacer tareas que normalmente requieren inteligencia humana: reconocer patrones, aprender de los datos, predecir y tomar decisiones."},
+{t:"Machine learning (aprendizaje automático)",p:["machine learning","aprendizaje automático"],d:"Tipo de IA en el que el sistema aprende a partir de ejemplos (datos) en lugar de programarle reglas fijas. Cuantos más datos y de mejor calidad, mejor aprende."},
+{t:"Modelo (de IA)",p:["modelo","modelos"],d:"Lo que se obtiene al entrenar una IA: una representación matemática de los patrones aprendidos que, al recibir datos nuevos, da una predicción (por ejemplo, «este husillo va a fallar»)."},
+{t:"Entrenamiento",p:["entrena","entrenado","entrenar","entrenamiento"],d:"Fase en la que el modelo de IA aprende a partir de datos históricos. Después del entrenamiento viene la inferencia, que es usar el modelo con datos nuevos."},
+{t:"Datos etiquetados",p:["etiquetan","etiquetados"],d:"Datos a los que se les ha añadido la respuesta correcta (por ejemplo «máquina sana» o «máquina cerca de fallar») para que el modelo aprenda a distinguirlos. Es lo que se llama aprendizaje supervisado."},
+{t:"Inferencia",p:["inferencia"],d:"Cuando el modelo ya entrenado recibe datos actuales y los compara con lo aprendido para dar un resultado o predicción. Es la IA «trabajando» en producción."},
+{t:"Detección de anomalías",p:["detección de anomalías","anomalía","anomalías","anómalo","anómalos"],d:"Técnica que aprende cómo se comporta normalmente una máquina y avisa cuando algo se sale de lo normal. No necesita ejemplos de averías, por eso sirve para empezar cuando no hay histórico."},
+{t:"Patrón",p:["patrón","patrones"],d:"Comportamiento que se repite en los datos y se puede reconocer, por ejemplo la forma de vibrar de un husillo sano frente a uno desgastado."},
+{t:"Histórico",p:["histórico"],d:"Registro acumulado de datos del pasado (producción, averías, consumos…). La IA y el Big Data lo necesitan para aprender y comparar."},
+{t:"Datos de calidad",p:["datos de calidad"],d:"Datos correctos, completos, coherentes y actualizados. Si los datos son malos, la IA dará resultados malos («basura entra, basura sale»)."},
+{t:"Big Data",p:["Big Data"],d:"Conjuntos de datos tan grandes, rápidos y variados que no se pueden manejar con herramientas normales. Se resume con las «V»: volumen, velocidad, variedad, veracidad y valor."},
+{t:"Analítica de datos",p:["analítica de datos","analítica"],d:"Examinar datos para sacar conclusiones útiles. Puede ser descriptiva (qué pasó), diagnóstica (por qué pasó), predictiva (qué pasará) o prescriptiva (qué conviene hacer)."},
+{t:"Visión artificial",p:["visión artificial"],d:"IA que analiza imágenes de cámaras para reconocer objetos o defectos. En AquaFlow revisa el acabado cromado de cada pieza, más rápido y constante que el ojo humano."},
+{t:"Mantenimiento predictivo",p:["mantenimiento predictivo"],d:"Intervenir en una máquina según su estado real, medido con sensores, justo antes de que falle. Se diferencia del correctivo (reparar cuando ya se ha roto) y del preventivo (revisar cada cierto tiempo, aunque no haga falta)."},
+{t:"CNC (Control Numérico por Computadora)",p:["CNC"],d:"Máquina-herramienta (torno, fresadora…) controlada por un programa que mecaniza las piezas con mucha precisión. En AquaFlow da forma a los cuerpos de los grifos y válvulas."},
+{t:"Prensa de forja",p:["prensas de forja","prensas","prensa"],d:"Máquina que da forma al latón caliente aplicando una presión muy grande. Es una de las primeras fases de fabricación de un grifo."},
+{t:"Husillo",p:["husillo","husillos"],d:"Eje giratorio de la máquina CNC que hace girar la herramienta o la pieza. Cuando se desgasta vibra más y se calienta, y eso es lo que miden los sensores."},
+{t:"Rodamiento",p:["rodamiento","rodamientos"],d:"Pieza con bolas o rodillos que permite que un eje gire con poco rozamiento. Su desgaste es una de las causas más habituales de avería."},
+{t:"Sensor",p:["sensor","sensores"],d:"Dispositivo que mide una magnitud física (vibración, temperatura, caudal, energía…) y la convierte en un dato que se puede enviar y analizar. Es OT."},
+{t:"PLC (Controlador Lógico Programable)",p:["PLC"],d:"Ordenador industrial resistente que controla una máquina o proceso en tiempo real a partir de las señales de los sensores. Es OT."},
+{t:"Gateway (pasarela)",p:["gateway","gateway IoT"],d:"Dispositivo que recoge los datos de las máquinas, los traduce de los protocolos industriales a protocolos de red y los envía a la plataforma de datos. Es IT+OT porque une la planta con el negocio."},
+{t:"Plataforma de datos",p:["plataforma de datos","plataforma"],d:"Sistema, en servidores propios o en la nube, donde se reciben, guardan y comparten los datos de la planta y del negocio. Es IT+OT."},
+{t:"CMMS (software de mantenimiento)",p:["CMMS","software de mantenimiento"],d:"Computerized Maintenance Management System, en español GMAO (Gestión de Mantenimiento Asistido por Ordenador). Programa que registra máquinas, averías y revisiones, y gestiona las órdenes de trabajo y los repuestos. Es IT."},
+{t:"Orden de trabajo",p:["orden de trabajo","órdenes de trabajo"],d:"Documento, normalmente digital, que indica qué tarea de mantenimiento hay que hacer, en qué máquina, quién la hace y cuándo."},
+{t:"Dashboard",p:["dashboard","dashboards"],d:"Panel visual con gráficos e indicadores actualizados que permite ver de un vistazo el estado de las máquinas o del negocio."},
+{t:"BI (Business Intelligence)",p:["BI"],cs:true,d:"Inteligencia de negocio: herramientas que convierten los datos de la empresa en informes, gráficos e indicadores para tomar decisiones (por ejemplo Power BI). Es IT."},
+{t:"Indicadores (KPI)",p:["indicadores","KPI"],d:"Medidas numéricas que muestran si la empresa cumple sus objetivos, por ejemplo el número de paradas, el porcentaje de piezas rechazadas o el consumo por pieza. KPI significa Key Performance Indicator."},
+{t:"Tiempo real",p:["tiempo real"],d:"Que el dato está disponible en el mismo momento en que ocurre, no horas o días después."},
+{t:"Parada",p:["paradas","parada","paradas no planificadas","parada programada"],d:"Tiempo en el que una máquina no produce. Una parada no planificada es imprevista (por avería); una parada programada está prevista de antemano y se aprovecha para hacer mantenimiento sin perjudicar la producción."},
+{t:"Cuello de botella",p:["cuellos de botella","cuello de botella"],d:"La fase más lenta de un proceso, que limita la producción de toda la cadena, igual que el cuello estrecho de una botella limita lo que sale."},
+{t:"Rechazos",p:["rechazos"],d:"Piezas que no superan el control de calidad y se desechan o hay que volver a procesar. Suponen pérdida de material, energía y tiempo."},
+{t:"Prueba de estanqueidad",p:["pruebas de estanqueidad","estanqueidad"],d:"Prueba que comprueba que un grifo o válvula no tiene fugas, sometiéndolo a presión de agua o aire."},
+{t:"Fundición",p:["hornos de fundición","fundición"],d:"Fundir el latón en hornos para verterlo en moldes. Los hornos consumen muchísima energía."},
+{t:"Cromado",p:["baños de cromado","cromado","cromo"],d:"Recubrimiento de cromo que se aplica por electrólisis en baños químicos. Da brillo y protege la pieza de la corrosión. Gasta mucha energía y usa productos químicos."},
+{t:"Pulido",p:["pulido"],d:"Proceso que deja la superficie de la pieza lisa y brillante antes del cromado. Si falla, el defecto se nota en el acabado."},
+{t:"Latón",p:["latón"],d:"Aleación (mezcla) de cobre y zinc. Se usa en grifería porque es resistente a la corrosión y fácil de mecanizar."},
+{t:"Aire comprimido",p:["aire comprimido","compresores"],d:"Aire a presión, producido por compresores, que mueve herramientas y máquinas. Producirlo gasta mucha electricidad, y sus fugas son un gasto invisible si no se mide."},
+{t:"kWh (kilovatio hora)",p:["kWh"],d:"Unidad de energía que aparece en la factura eléctrica: la energía que consume un aparato de 1.000 W funcionando una hora."},
+{t:"Emisiones",p:["emisiones"],d:"Gases de efecto invernadero (sobre todo CO₂) que se liberan al producir la energía que se consume. Si se gasta menos energía, se emite menos."},
+{t:"Eficiencia",p:["eficiencia"],d:"Conseguir un resultado usando los mínimos recursos posibles (tiempo, energía, material, dinero)."},
+{t:"Efectividad",p:["efectividad"],d:"Conseguir el objetivo correcto, el que de verdad importa. Lo ideal es ser eficaz/efectivo y además eficiente."},
+{t:"Peter Drucker",p:["Peter Drucker"],d:"Consultor y profesor austriaco-estadounidense (1909–2005), considerado el padre de la gestión empresarial moderna (management)."},
+{t:"ROI (Retorno de la inversión)",p:["ROI"],d:"Return on Investment. Mide si una inversión compensa: ROI = (beneficio obtenido − coste de la inversión) ÷ coste de la inversión × 100. Si sale positivo, se gana dinero."},
+{t:"Materia prima",p:["materia prima"],d:"Material base con el que se fabrica el producto. En AquaFlow, sobre todo latón y cromo."},
+{t:"Sostenibilidad",p:["sostenibilidad"],d:"Producir cubriendo las necesidades actuales sin comprometer las del futuro: ahorrar energía y agua, generar menos residuos y menos emisiones."},
+{t:"Lote",p:["lote","lotes"],d:"Conjunto de piezas fabricadas juntas en las mismas condiciones e identificadas con un mismo número. Si falla una pieza, se puede revisar todo su lote."},
+{t:"Trazabilidad",p:["trazabilidad"],d:"Poder seguir toda la historia de un producto: con qué materia prima, en qué máquina, cuándo se fabricó, qué pruebas pasó y a qué cliente llegó."},
+{t:"Número de serie",p:["número de serie"],d:"Código único que identifica a cada unidad fabricada, distinto para cada pieza."},
+{t:"Pasaporte digital de producto",p:["pasaporte digital"],d:"Registro digital asociado a cada producto, normalmente accesible con un QR, con su información: origen, lote, pruebas, instrucciones, reparación y reciclaje. La Unión Europea lo está implantando con el Reglamento de Ecodiseño."},
+{t:"Código QR",p:["código QR"],d:"Código de barras en dos dimensiones que, al escanearlo con el móvil, abre un enlace o muestra información."},
+{t:"Válvula de corte inteligente",p:["válvula de corte inteligente","válvula de corte"],d:"Válvula que abre o cierra el paso del agua. La versión inteligente lleva sensor y conectividad, y puede cerrarse sola y avisar al móvil si detecta una fuga."},
+{t:"Caudal",p:["sensor de caudal","caudal"],d:"Cantidad de agua que pasa por una tubería en un tiempo determinado (por ejemplo, litros por minuto). El sensor de caudal la mide."},
+{t:"Conectividad",p:["conectividad"],d:"Capacidad de un dispositivo para conectarse a una red (wifi, 4G/5G, LoRaWAN, NB-IoT…) y enviar o recibir datos."},
+{t:"Cloud (la nube)",p:["Cloud","nube"],d:"Usar servidores, almacenamiento y programas a través de internet en lugar de tenerlos en la empresa, pagando según el uso. Es también una THD."},
+{t:"Servicio recurrente / suscripción",p:["servicio recurrente","suscripción"],d:"Modelo de negocio en el que el cliente paga una cuota periódica (mensual, anual) por un servicio. Da ingresos estables. Pasar de vender productos a vender servicios se llama servitización."},
+{t:"Valor añadido",p:["valor añadido"],d:"Lo que un producto o servicio aporta de más y hace que el cliente esté dispuesto a pagar por él o lo prefiera frente a la competencia."},
+{t:"Constructora",p:["constructoras"],d:"Empresa que ejecuta la obra: construye físicamente el edificio."},
+{t:"Promotora",p:["promotoras"],d:"Empresa que impulsa y financia un proyecto inmobiliario (compra el suelo, encarga la obra) y luego vende las viviendas."},
+{t:"Empresa instaladora",p:["empresas instaladoras","instaladoras"],d:"Empresa que monta las instalaciones de fontanería, calefacción, etc., en viviendas y edificios."},
+{t:"Administrador de fincas",p:["administradores de fincas"],d:"Profesional que gestiona las comunidades de propietarios: cuentas, seguros, averías y obras de los edificios."},
+{t:"Distribuidor",p:["distribuidores"],d:"Empresa intermediaria que compra al fabricante y vende a tiendas, almacenes o instaladores."},
+{t:"Ciberseguridad",p:["ciberseguridad"],d:"Protección de sistemas, redes y datos frente a ataques, robos o accesos no autorizados. También se considera una THD."},
+{t:"Segmentación de red IT/OT",p:["segmentación de red IT/OT","segmentación IT/OT","segmentación de red"],d:"Separar la red de la planta (OT) de la red de oficinas (IT) con cortafuegos o redes virtuales, para que un ataque en una no pueda saltar a la otra."},
+{t:"Control de accesos",p:["control de accesos"],d:"Medidas para que solo las personas y dispositivos autorizados puedan entrar a un sistema: usuarios, contraseñas, permisos por rol y doble factor."},
+{t:"Superficie de ataque",p:["superficie de ataque"],d:"Conjunto de puntos por los que un atacante podría entrar en un sistema. Cada dispositivo conectado a internet la hace más grande."},
+{t:"Cifrado",p:["cifrado"],d:"Transformar los datos para que solo pueda leerlos quien tenga la clave. Aunque alguien los intercepte, no le sirven."},
+{t:"RGPD",p:["RGPD"],d:"Reglamento General de Protección de Datos de la Unión Europea (2016/679), aplicable desde 2018. Regula cómo se recogen y usan los datos personales. En España se completa con la LOPDGDD."},
+{t:"Datos personales",p:["datos personales"],d:"Cualquier información sobre una persona identificada o identificable. El consumo de agua de un hogar lo es, porque revela hábitos de quien vive allí."},
+{t:"Retroalimentación",p:["retroalimenta","retroalimentación"],d:"Devolver al sistema el resultado real para que aprenda y mejore. Aquí, el diagnóstico de mantenimiento se le da al modelo para corregir sus fallos."}
+];
+
+(function(){
+  const esc=s=>s.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&");
+  const mapa=new Map();
+  DICC.forEach((x,i)=>x.p.forEach(p=>mapa.set(p.toLowerCase(),i)));
+  const formas=[...mapa.keys()].sort((a,b)=>b.length-a.length);
+  const re=new RegExp("(?<![\\p{L}\\p{N}])("+formas.map(esc).join("|")+")(?![\\p{L}\\p{N}])","giu");
+  const SALTAR="h1,h2,nav,a,footer,.team,#diccionario,.term,script,style";
+
+  /* marcar las palabras del texto */
+  const main=document.querySelector("main");
+  const tw=document.createTreeWalker(main,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest(SALTAR)||!n.nodeValue.trim()?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const nodos=[];while(tw.nextNode())nodos.push(tw.currentNode);
+  nodos.forEach(n=>{
+    const txt=n.nodeValue;let m,ult=0,frag=null;re.lastIndex=0;
+    while((m=re.exec(txt))){
+      const i=mapa.get(m[0].toLowerCase());
+      const forma=DICC[i].p.find(p=>p.toLowerCase()===m[0].toLowerCase());
+      if(DICC[i].cs&&forma===forma.toUpperCase()&&m[0]!==forma)continue; /* siglas: solo en mayúsculas */
+      frag=frag||document.createDocumentFragment();
+      frag.append(txt.slice(ult,m.index));
+      const s=document.createElement("span");
+      s.className="term";s.dataset.t=i;s.tabIndex=0;s.setAttribute("role","button");s.setAttribute("aria-expanded","false");
+      s.textContent=m[0];frag.append(s);ult=m.index+m[0].length;
+    }
+    if(frag){frag.append(txt.slice(ult));n.replaceWith(frag);}
+  });
+
+  /* bocadillo */
+  const pop=document.getElementById("bocadillo"),flecha=pop.querySelector(".flecha");
+  let actual=null;
+  function colocar(){
+    if(!actual)return;
+    const r=actual.getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight;
+    let x=r.left+r.width/2-w/2;x=Math.max(8,Math.min(x,innerWidth-w-8));
+    const arriba=r.bottom+h+16>innerHeight&&r.top-h-16>0;
+    pop.classList.toggle("arriba",arriba);
+    pop.style.left=x+scrollX+"px";
+    pop.style.top=(arriba?r.top-h-12:r.bottom+12)+scrollY+"px";
+    flecha.style.left=Math.max(14,Math.min(r.left+r.width/2-x,w-14))+"px";
+  }
+  function cerrar(){if(!actual)return;actual.classList.remove("activo");actual.setAttribute("aria-expanded","false");actual=null;pop.hidden=true;}
+  function abrir(el){
+    if(actual===el){cerrar();return;}
+    cerrar();const x=DICC[el.dataset.t];
+    pop.querySelector("strong").textContent=x.t;pop.querySelector("p").textContent=x.d;
+    pop.hidden=false;actual=el;el.classList.add("activo");el.setAttribute("aria-expanded","true");colocar();
+  }
+  document.addEventListener("click",e=>{const el=e.target.closest(".term[data-t]");if(el)abrir(el);else if(!pop.contains(e.target))cerrar();});
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape")cerrar();
+    const el=e.target.closest&&e.target.closest(".term[data-t]");
+    if(el&&(e.key==="Enter"||e.key===" ")){e.preventDefault();abrir(el);}
+  });
+  addEventListener("resize",colocar);
+
+  /* lista del apartado 6 */
+  const dl=document.getElementById("dicc");
+  [...DICC].sort((a,b)=>a.t.localeCompare(b.t,"es")).forEach(x=>{
+    const dt=document.createElement("dt"),dd=document.createElement("dd");
+    dt.textContent=x.t;dd.textContent=x.d;dl.append(dt,dd);
+  });
+  const quitar=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  document.getElementById("buscar").addEventListener("input",e=>{
+    const q=quitar(e.target.value.trim());
+    dl.querySelectorAll("dt").forEach(dt=>{
+      const ok=!q||quitar(dt.textContent+" "+dt.nextElementSibling.textContent).includes(q);
+      dt.classList.toggle("oculto",!ok);dt.nextElementSibling.classList.toggle("oculto",!ok);
+    });
+  });
+})();
+</script>
 </body>
 </html>
